@@ -69,3 +69,25 @@ ip tuntap del dev $1 mode tap
 ip link set dev br0 down
 ip link delete br0 type bridge
 ```
+
+### 附：`initramfs/init` 脚本
+
+```sh
+#!/bin/sh
+
+mount -t proc none /proc
+mount -t sysfs none /sys
+mount -t tmpfs none /tmp
+mount -t devtmpfs none /dev
+
+insmod /lib/modules/e1000_for_linux.ko
+
+ip addr add 127.0.0.1/32 dev lo
+ip link set lo up
+
+ip addr add 192.168.100.223/24 dev eth0
+ip link set eth0 up
+
+export 'PS1=(rfl)> '
+exec /bin/sh
+```
