@@ -91,3 +91,13 @@ ip link set eth0 up
 export 'PS1=(rfl)> '
 exec /bin/sh
 ```
+
+## 编译 linux-fujita 注意事项
+
+https://github.com/fujita/linux
+
+- 使用 LLVM 14 工具链，过高和过低都会引起问题
+    - 如果是 Debian/Ubuntu 发行版，可以用 apt.llvm.org 提供的命令 `wget https://apt.llvm.org/llvm.sh && chmod +x llvm.sh && sudo ./llvm.sh 14 all`
+- Rust 为 1.62 版本，不支持稀疏索引，需在镜像源设置删掉稀疏索引的部分
+- `bindgen` 和 `bindgen-cli`：在老版本中，`bindgen-cli` 合并在 `bindgen` 这个 crate 里，新版本分开了
+
